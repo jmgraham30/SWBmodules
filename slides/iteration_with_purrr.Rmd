@@ -15,7 +15,7 @@ library(kableExtra)
 
 ## Learning Objectives
 
-In this lesson, we cover the basic usage and application of "tidy" iteration using the `purrr` package. After this lesson you should
+In this lesson, we cover the basic usage and application of "tidy" iteration using the `purrr` package. After this lesson you should:
 
 - Be familiar with common loop patterns.
 - Have a feel for the map family of `purrr` functions. 
@@ -37,9 +37,8 @@ You can find code relevant to this lesson on [my GitHub repo](https://github.com
 This lesson assumes familiarity with
 
 - Vectors, lists, data frames, and functions in R. 
-- The use of [tidyverse](https://www.tidyverse.org/) packages such as `tibble`, `ggplot2`, and `dplyr`. 
-  - In particular, we assume a level of comfort in working with data frames or tibbles and basic plotting using `ggplot2`.  
-
+- The use of [tidyverse](https://www.tidyverse.org/) packages such as [`tibble`](https://tibble.tidyverse.org/), [`ggplot2`](https://ggplot2.tidyverse.org/), and [`dplyr`](https://dplyr.tidyverse.org/). 
+ 
 - Knowledge of basic statistical concepts such as confidence intervals and linear models is helpful but not essential.   
 
 ## Iteration 
@@ -55,6 +54,29 @@ Let's review the basic programming construct known as for loops.
 
 ## Loops 
 
+
+## Loops in R
+
+A `for` loop in R has the general form
+
+`for (item in vector) perform_action`
+
+For example:
+
+```
+for (i in 1:3){
+   print(2*i)
+}
+```
+
+## Output From Example Loop
+
+The `for` loop in the previous slide will output
+```{r}
+for (i in 1:3){
+   print(2*i)
+}
+```
 
 
 ## Functional Programming
