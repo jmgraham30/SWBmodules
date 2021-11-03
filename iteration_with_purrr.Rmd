@@ -30,13 +30,21 @@ References for this lesson are
 - [Advanced R](https://adv-r.hadley.nz/)
 - [purrr Documentation](https://purrr.tidyverse.org/)
 
-You can find code relevant to this lesson on [my GitHub repo](). 
+You can find code relevant to this lesson on [my GitHub repo](https://github.com/jmgraham30/SWBmodules). 
 
 ## Prerequisites
 
+This lesson assumes familiarity with
+
+- The use of [tidyverse](https://www.tidyverse.org/) packages such as `tibble`, `ggplot2`, and `dplyr`. 
+  - In particular, we will assume that the learner is comfortable with working with data frames or tibbles and is familiar with basic plotting using `ggplot2`.  
+
+- We will refer to some basic statistical concepts such as confidence intervals and linear models. However, you can probably still get a fair amount out of this lesson even if your statistics background is minimal.  
+
+## Iteration 
 
 
-## Function Programming
+## Functional Programming
 
 
 
