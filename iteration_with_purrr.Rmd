@@ -1,0 +1,67 @@
+---
+title: "Iteration With purrr"
+author: "JMG"
+date: "11/3/2021"
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(patchwork)
+library(latex2exp)
+library(kableExtra)
+```
+
+## Learning Objectives
+
+In this lesson, we cover the basic usage and application of iteration following "tidy" principles by using the `purrr` package. After this lesson you should
+
+- Be familiar with common loop patterns.
+- Have a feel for the map family of `purrr` functions. 
+- Be aware of some statistical applications of iteration using the `purrr` package.
+
+
+## References 
+
+References for this lesson are
+
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [Advanced R](https://adv-r.hadley.nz/)
+- [purrr Documentation](https://purrr.tidyverse.org/)
+
+You can find code relevant to this lesson on [my GitHub repo](). 
+
+## Prerequisites
+
+
+
+## Function Programming
+
+
+
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
