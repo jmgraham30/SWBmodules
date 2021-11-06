@@ -17,18 +17,18 @@ library(kableExtra)
 
 In this lesson, we cover the basic usage and application of "tidy" iteration using the `purrr` package. After this lesson you should:
 
-- Be familiar with common loop patterns.
-- Have a feel for the map family of `purrr` functions. 
-- Be aware of some statistical applications of iteration using the `purrr` package.
+1. Be familiar with common loop patterns.
+2. Have a feel for the map family of `purrr` functions. 
+3. Be aware of some statistical applications of iteration using the `purrr` package.
 
 
 ## References 
 
 References for this lesson are
 
-- [R for Data Science](https://r4ds.had.co.nz/)
-- [Advanced R](https://adv-r.hadley.nz/)
-- [purrr Documentation](https://purrr.tidyverse.org/)
+* [R for Data Science](https://r4ds.had.co.nz/)
+* [Advanced R](https://adv-r.hadley.nz/)
+* [purrr Documentation](https://purrr.tidyverse.org/)
 
 You can find code relevant to this lesson on [my GitHub repo](https://github.com/jmgraham30/SWBmodules). 
 
@@ -84,14 +84,55 @@ for (i in 1:3){
 ```
 
 
-##  Cons of Loops
-
-
-
 ## Functional Programming
 
+- Often, for loops are unnecessary in R because the language supports [functional programming](https://en.wikipedia.org/wiki/Functional_programming) (FP).
+
+- FP is a paradigm that utilizes functions and function composition to develop code.
+
+- Use of FP can lead to clean, concise code. 
+
+- The `purrr` package enhances FP in R.  
+
+## FP: Getting Started
+
+A good way to get started with FP in R is via the `map` family of functions from `purrr`. 
+
+- Here is a simple example:
+
+```
+map(1:3,function(x){2*x})
+```
+
+- This creates a list object that contains 2, 4, and 6.
+
+## Output from Previous Slide
+
+```{r}
+map(1:3,function(x){2*x})
+```
+
+## Explanation of map
+
+- The `map` function inputs an object such as a vector, list, or data frame together with a function, and applies the function to each component of the object. 
+
+- `map` returns a list object. 
+
+- There are similar functions, `ma_lgl`, `map_chr`, `map_dbl`, `map_int`, etc. that return different data types. Examine documentation with `?map` for details. 
 
 
+## Example Output
 
+- For example, 
 
+```
+map_dbl(1:3,function(x){2*x})
+```
 
+outputs
+
+```{r}
+map_dbl(1:3,function(x){2*x})
+```
+
+- This is a simple (atomic) vector instead of a list. 
