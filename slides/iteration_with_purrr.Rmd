@@ -2,14 +2,17 @@
 title: "Iteration With purrr"
 author: "JMG"
 date: "11/3/2021"
-output: powerpoint_presentation
+output: 
+  powerpoint_presentation:
+    reference_doc: BasicStatsRTemplate.pptx
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
+library(broom)
+library(faraway)
 library(patchwork)
-library(latex2exp)
 library(kableExtra)
 ```
 
@@ -17,8 +20,10 @@ library(kableExtra)
 
 In this lesson, we cover the basic usage and application of "tidy" iteration using the `purrr` package. After this lesson you should:
 
-1. Be familiar with common loop patterns.
-2. Have a feel for the map family of `purrr` functions. 
+1. Have a feel for the map family of `purrr` functions. 
+
+2. Have an understanding of how `purr` functions can be used in place of loops.
+
 3. Be aware of some statistical applications of iteration using the `purrr` package.
 
 
@@ -27,7 +32,9 @@ In this lesson, we cover the basic usage and application of "tidy" iteration usi
 References for this lesson are
 
 * [R for Data Science](https://r4ds.had.co.nz/)
+
 * [Advanced R](https://adv-r.hadley.nz/)
+
 * [purrr Documentation](https://purrr.tidyverse.org/)
 
 You can find code relevant to this lesson on [my GitHub repo](https://github.com/jmgraham30/SWBmodules). 
@@ -37,6 +44,7 @@ You can find code relevant to this lesson on [my GitHub repo](https://github.com
 This lesson assumes familiarity with
 
 - Vectors, lists, data frames, and functions in R. 
+
 - The use of [tidyverse](https://www.tidyverse.org/) packages such as [`tibble`](https://tibble.tidyverse.org/), [`ggplot2`](https://ggplot2.tidyverse.org/), and [`dplyr`](https://dplyr.tidyverse.org/). 
  
 - Knowledge of basic statistical concepts such as confidence intervals and linear models is helpful but not essential.   
@@ -45,9 +53,9 @@ This lesson assumes familiarity with
 
 In [R for Data Science](https://r4ds.had.co.nz/), good programming practices are stressed. For example, it is emphasized that one should never copy and paste code more than twice. 
 
-- Loops provide one way to avoiding copying and pasting, 
+- Loops provide one way to avoiding copying and pasting. 
 
-- functions provide another.  
+- Functions provide another.  
 
 Let's review the basic programming construct known as for loops. 
 
@@ -83,6 +91,8 @@ for (i in 1:3){
 }
 ```
 
+Note that if we wanted to store the result of multiplying by 2 instead of printing it, we would need to initialize a vector of the appropriate size. 
+
 
 ## Functional Programming
 
@@ -93,6 +103,8 @@ for (i in 1:3){
 - Use of FP can lead to clean, concise code. 
 
 - The `purrr` package enhances FP in R.  
+
+- FP code is convenient for multi-processing. 
 
 ## FP: Getting Started
 
@@ -118,7 +130,7 @@ map(1:3,function(x){2*x})
 
 - `map` returns a list object. 
 
-- There are similar functions, `ma_lgl`, `map_chr`, `map_dbl`, `map_int`, etc. that return different data types. Examine documentation with `?map` for details. 
+- There are similar functions, `map_lgl`, `map_chr`, `map_dbl`, `map_int`, etc. that return different data types. Examine documentation with `?map` for details. 
 
 
 ## Example Output
@@ -136,3 +148,140 @@ map_dbl(1:3,function(x){2*x})
 ```
 
 - This is a simple (atomic) vector instead of a list. 
+
+- Let's see some more interesting use cases. 
+
+## Compute Multi-Column Medians
+
+```{r sim_data,echo=FALSE}
+sim_data <- tibble(a=rnorm(57),b=runif(57),c=rpois(57,0.7),d=runif(57,1,3))
+```
+
+- Suppose we have a data frame named `sim_data` with 4 numerical columns and we want to compute the median for each column.  
+
+```
+map_dbl(sim_data,median)
+```
+```{r}
+round(map_dbl(sim_data,median),2)
+```
+
+
+
+## Bootstrap Confidence Intervals
+
+- Bootstrapping approximates a sampling distribution by sampling **with replacement** many times the original sample. 
+
+- We will see an application of using `purrr` to implement a bootstrap to approximate a confidence interval for a mean and confidence intervals for parameters in a linear model. 
+
+## Bootstrapping a Mean
+
+- We start with some simulated data:
+```
+set.seed(42)
+x <- rnorm(35,10,6.7)
+```
+
+- Then we define a function that will return a single sample with replacement of out data:
+```
+my_boot_samp <- function(i){
+  return(sample(x,replace=TRUE))
+}
+```
+
+```{r,echo=FALSE}
+set.seed(42)
+x <- rnorm(35,10,6.7)
+my_boot_samp <- function(i){
+  return(sample(x,replace=TRUE))
+}
+```
+
+## Applying map to Obtain Resamples
+
+- Next, we apply `map` to obtain a list of 500 resamples:
+
+```
+boot_samps <- map(1:500,my_boot_samp)
+```
+
+- Finally, we use `map_dbl` to compute the mean for each of our bootstrap resamples:
+```
+boot_means <- map_dbl(boot_samps,mean)
+```
+
+```{r,echo=FALSE}
+boot_samps <- map(1:500,my_boot_samp) 
+boot_means <- map_dbl(boot_samps,mean)
+```
+
+## Results
+
+- We compare the bootstrap CI with the usual formula:
+
+  - Bootstrap CI
+  ```
+  quantile(boot_means,probs = c(0.025,0.975))
+  ```
+  ```{r,echo=FALSE}
+  quantile(boot_means,probs = c(0.025,0.975))
+  ```
+  
+  - Usual CI
+  ```
+  mean(x) + 1.96*c(-1,1)*(sd(x)/sqrt(length(x)))
+  ```
+  ```{r,echo=FALSE}
+  mean(x) + 1.96*c(-1,1)*(sd(x)/sqrt(length(x)))
+  ```
+
+## Bootstrap Linear Model Parameters
+
+- Given a function `boot_samp_leafburn` that samples from the dataset, the following code obtains 500 bootstrap resamples of the `leafburn` data from the `faraway` package:
+```
+leafburn_boots <- map(1:500,boot_samp_leafburn)
+```
+
+## Bootstrap Linear Model Parameters, Cont.
+
+- Now, given a function `leafburn_boot_fit` that returns the parameters from a linear fit, we obtain bootstrapped estimates:
+
+```
+boot_leafburn_df <- boot_leafburn_df %>%
+  mutate(fits=map(boot_samps,leafburn_boot_fit))
+```
+
+## Results
+
+```{r,message=FALSE,warning=FALSE,echo=FALSE,fig.height=4}
+boot_samp_leafburn <- function(i){
+  boot_df <- sample_n(leafburn,nrow(leafburn),replace = TRUE)
+}
+
+leafburn_boots <- map(1:500,boot_samp_leafburn)
+
+boot_leafburn_df <- tibble(boot_samps=leafburn_boots)
+
+leafburn_boot_fit <- function(df){
+  lm_fit <- lm(burntime~nitrogen+chlorine+potassium,data=df)
+  return(tidy(lm_fit))
+}
+
+boot_leafburn_df <- boot_leafburn_df %>%
+  mutate(fits=map(boot_samps,leafburn_boot_fit))
+
+boot_leafburn_df %>% unnest(fits) %>%
+  group_by(term) %>%
+  ggplot(aes(x=estimate)) + geom_histogram() + 
+  facet_wrap(~term)
+```
+
+## Conclusion
+
+- We have introduced and demonstrated iteration in R using the `map` family of functions from the `purrr` package. 
+
+- For more information, see [R for Data Science](https://r4ds.had.co.nz/), [Advanced R](https://adv-r.hadley.nz/), and [purrr Documentation](https://purrr.tidyverse.org/).
+
+- A `purrr` cheatsheet is available [here](https://purrr.tidyverse.org/).
+
+- The complete code for all examples is available [here](https://github.com/jmgraham30/SWBmodules).

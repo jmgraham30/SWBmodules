@@ -42,30 +42,39 @@ quantile(boot_means,probs = c(0.025,0.975))
 mean(x) + 1.96*c(-1,1)*(sd(x)/sqrt(length(x)))
 
 
-# The remainder of the code applies 
-# bootstrapping to parameter estimates
-# for a linear model
+# Plot of bootstrap means
 tibble(boot_means=boot_means) %>% ggplot(aes(x=boot_means)) + 
   geom_histogram()
 
+# The remainder of the code applies 
+# bootstrapping to parameter estimates
+# for a linear model
+
+# We use the leafburn data set from the faraway package
 help("leafburn")
 
+# A function to resample data
 boot_samp_leafburn <- function(i){
   boot_df <- sample_n(leafburn,nrow(leafburn),replace = TRUE)
 }
 
+# Obtain bootstrap samples
 leafburn_boots <- map(1:500,boot_samp_leafburn)
 
+# Add as a list column to a data frame
 boot_leafburn_df <- tibble(boot_samps=leafburn_boots)
 
+# A function to fit bootstrap samples
 leafburn_boot_fit <- function(df){
   lm_fit <- lm(burntime~nitrogen+chlorine+potassium,data=df)
   return(tidy(lm_fit))
 }
 
+# Bootstrap parameters from linear model fit
 boot_leafburn_df <- boot_leafburn_df %>%
   mutate(fits=map(boot_samps,leafburn_boot_fit))
 
+# Plot the results
 boot_leafburn_df %>% unnest(fits) %>%
   group_by(term) %>%
   ggplot(aes(x=estimate)) + geom_histogram() + 
