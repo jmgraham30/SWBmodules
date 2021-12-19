@@ -10,6 +10,32 @@ library(faraway)
 # Set a seed for reproducibility
 set.seed(42)
 
+
+# Create a data frame of simulated data
+
+sim_data <- map(1:5,~rnorm(15,6,1.8)) # creates a list
+
+sim_df <- map_dfc(1:5,~rnorm(15,6,1.8)) # creates a data frame
+
+# Standardize Each Column
+
+my_stdzr <- function(x){
+  return((x-mean(x))/sd(x))
+}
+
+sim_df_std <- map_df(sim_df,my_stdzr)
+
+# Apply t-test to Each Column
+
+my_t_test <- function(x){
+  res <- t.test(x,mu=6)
+  return(res$p.value)
+}
+
+test_results <- map_dbl(sim_df,my_t_test)
+
+### More Sophisticated Examples: Bootstrapping
+
 # Generate a random sample
 x <- rnorm(35,10,6.7)
 

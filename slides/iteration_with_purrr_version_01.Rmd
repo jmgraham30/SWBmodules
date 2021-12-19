@@ -13,7 +13,6 @@ library(tidyverse)
 library(broom)
 library(faraway)
 library(patchwork)
-library(kableExtra)
 ```
 
 ## Learning Objectives
@@ -126,11 +125,19 @@ map(1:3,function(x){2*x})
 
 ## Explanation of map
 
-- The `map` function inputs an object such as a vector, list, or data frame together with a function, and applies the function to each component of the object. 
+- The `map` function inputs an object such as a vector, list, or data frame together with a function, and applies that function to each component of the object. 
+
+
+
+## Input/Output for map 
 
 - `map` returns a list object. 
 
 - There are similar functions, `map_lgl`, `map_chr`, `map_dbl`, `map_int`, etc. that return different data types. Examine documentation with `?map` for details. 
+
+- Let's see some examples for `map`. 
+
+- We start by using `map` to solve the same problem we already solved using a loop, that is, to multiply a sequence of numbers by 2.  
 
 
 ## Example Output
