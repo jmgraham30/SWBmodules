@@ -17,6 +17,8 @@ sim_data <- map(1:5,~rnorm(15,6,1.8)) # creates a list
 
 sim_df <- map_dfc(1:5,~rnorm(15,6,1.8)) # creates a data frame
 
+sim_df <- janitor::clean_names(sim_df)
+
 # Standardize Each Column
 
 my_stdzr <- function(x){
@@ -33,6 +35,19 @@ my_t_test <- function(x){
 }
 
 test_results <- map_dbl(sim_df,my_t_test)
+
+# Apply t-tests with varying means
+
+my_t_test_multi <- function(x,mu_val){
+  res <- t.test(x,mu=mu_val)
+  return(res$p.value)
+}
+
+multi_test_results <- map2(sim_df,c(6,7,9,6,2),my_t_test_multi)
+
+# or
+
+multi_test_results_dbl <- map2_dbl(sim_df,c(6,7,9,6,2),my_t_test_multi)
 
 ### More Sophisticated Examples: Bootstrapping
 

@@ -187,6 +187,22 @@ In order to further demonstrate the utility of the `map` family of functions, we
 
 In order to make this lesson more interactive, let's go to an R session and work these examples out together. 
 
+## Multiple Inputs
+
+At times, a problem calls for us to evaluate a function over multiple arguments. Functions from purr such map2 and pmap allow us to do this iteratively similarly to what we’ve done using the map family of functions.  
+
+```
+x <- c(1,2,3)
+y <- c(2,4,6)
+map2(x,y,~.x*.y)
+```
+
+```{r}
+x <- c(1,2,3)
+y <- c(2,4,6)
+map2(x,y,~.x*.y)
+```
+
 ## Conclusion
 
 - We have introduced and demonstrated iteration in R using the `map` family of functions from the `purrr` package. 
