@@ -28,6 +28,32 @@ After this lesson, you should
 data_folder <- "../Data/"
 data_file <- paste0(data_folder,"Monthly Employment.csv")
 food_services <- read_csv(data_file)
-r_paclage_downloads <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-30/r-downloads.csv")
+r_package_downloads <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-30/r-downloads.csv")
 ```
+
+
+```{r}
+head(food_services)
+```
+
+
+```{r}
+glimpse(food_services)
+```
+
+
+```{r}
+glimpse(r_package_downloads)
+```
+
+```{r}
+r_package_downloads <- r_package_downloads %>% mutate(date_time=ymd(date) + hms(time))
+```
+
+
+```{r}
+glimpse(r_package_downloads)
+```
+
+
 
