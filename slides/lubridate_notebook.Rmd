@@ -82,4 +82,16 @@ glimpse(r_package_downloads)
 
 The point is, date and time data are common and R facilitates working with date and time data. However, working with date and time data, say for example when manipulating or exploring data can be quite tricky for reasons we will soon see. Lucky for use, the `lubridate` package eases some of the common difficulties in working with date and time data. Moreover, `lubridate` is highly compatible with many `tidyverse` packages their functions. 
 
-## 
+## Date-Time Challenges
+
+Perhaps one of the most common challenges of working with data that contains date-time entries is that different individuals record dates and times differently. For example, all of the following represent that same day:
+
+* February 14, 2022
+
+* 02-14-2022
+
+* 2022-02-14
+
+* 14-Feb-2022
+
+maybe even there are other possibilities. Working with dates and times becomes even more complicated when you are forced to deal with things like leap year or day light savings. The point here is to realize that handling date-time data may not always be so straightforward.  
