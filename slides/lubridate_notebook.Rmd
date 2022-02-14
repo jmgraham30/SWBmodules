@@ -21,7 +21,25 @@ After this lesson, you should
 
 2) know some introductory level techniques for handling date and time data in R using the `lubridate` package. 
 
-## Background
+## Background and Motivation 
+
+Data comes in a variety of types. For example, we measure quantities numerically with decimal numbers, count certain observations with whole numbers, and record other observations such as names with words. In R, these date are represented with specific types. For example, numeric values are represented with type `numeric`, while many types of nonnumeric data are represented with type `character`. Here are some examples where we show how to determine how R has represented the data:
+
+```{r}
+numeric_values <- c(1.2,6.5,8.1)
+class(numeric_values)
+```
+
+```{r}
+character_values <- c("dog","cat","bird")
+class(character_values)
+```
+
+Often, we store a data set as a `data.frame` or `tibble` in R. Each column in a data frame can have a different type for the data it contains. Let's read in some sampe data to see this. We will work with two data sets:
+
+1) The restaurants and food service data from [Data USA](https://datausa.io/) contained in the `Monthly Employment.csv` file, and
+
+2) the [R and R Packages download data](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-10-30) from [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday). 
 
 ```{r}
 # https://datausa.io/profile/naics/restaurants-food-services
@@ -32,28 +50,36 @@ r_package_downloads <- read_csv("https://raw.githubusercontent.com/rfordatascien
 ```
 
 
+Note that when we view part of a data frame, say using the `head` function, we see the data type for each column: 
+
 ```{r}
 head(food_services)
 ```
 
+For example, we see that the `Month of Year ID` variable has type `chr` which is short for `character`. Another way to see data frame column types is by using the  `glimpse` command from the `dplyr` package. For example, 
 
 ```{r}
 glimpse(food_services)
 ```
 
+We observe something very interesting from this. That is, the variable `Date` has type  `date`. It is very common to include columns in tabular data that correspond to dates. Further, dates, even when recorded with numbers are fundamentally different from other types of numerical data, and it can be argues that dates are not well-represented as characters either. Thus, R uses a particular type to represent dates. 
+
+Let's see another example. Call `glimpse` on the R packages data stored as `r_package_downloads`
 
 ```{r}
 glimpse(r_package_downloads)
 ```
+
+Not only is there a variable (`date`) with type `date`, there is also a variable (`time`) with type `time`. 
+
+To go even further, R can represent data that is made up of date and time together by the type `dttm`. The output from the following code illustrates this. For now, do not worry about what this code is doing, just look at the reported type for the variable `date_time` in the output from `glimpse`: 
 
 ```{r}
 r_package_downloads <- r_package_downloads %>% mutate(date_time=ymd(date) + hms(time))
-```
-
-
-```{r}
 glimpse(r_package_downloads)
 ```
 
 
+The point is, date and time data are common and R facilitates working with date and time data. However, working with date and time data, say for example when manipulating or exploring data can be quite tricky for reasons we will soon see. Lucky for use, the `lubridate` package eases some of the common difficulties in working with date and time data. Moreover, `lubridate` is highly compatible with many `tidyverse` packages their functions. 
 
+## 
