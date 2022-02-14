@@ -1,15 +1,17 @@
-# This script implements some code that 
+# This script implements code that 
 # illustrates some applications of functional programming
 # with purrr to data and statistics
 
 # Load packages
-library(tidyverse)
-library(broom)
-library(faraway)
+library(tidyverse) # contains purrr
+library(broom) # tidy output for regression models
+library(faraway) # contains data for regression examples
 
 # Set a seed for reproducibility
 set.seed(42)
 
+# Examine map help
+?map
 
 # Create a data frame of simulated data
 

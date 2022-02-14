@@ -1,0 +1,33 @@
+---
+title: "Dates and Times"
+author: "Jason M Graham"
+date: "2/14/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+#library(hms)
+```
+
+
+## Goals
+
+After this lesson, you should
+
+1) be aware of some common challenges of working with dates and times in R, and
+
+2) know some introductory level techniques for handling date and time data in R using the `lubridate` package. 
+
+## Background
+
+```{r}
+# https://datausa.io/profile/naics/restaurants-food-services
+data_folder <- "../Data/"
+data_file <- paste0(data_folder,"Monthly Employment.csv")
+food_services <- read_csv(data_file)
+r_paclage_downloads <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-30/r-downloads.csv")
+```
+
