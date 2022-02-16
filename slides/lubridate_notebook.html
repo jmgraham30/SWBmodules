@@ -379,12 +379,12 @@ time data in R using the <code>lubridate</code> package.</p></li>
 <h2>Background and Motivation</h2>
 <p>Data comes in a variety of types. For example, we measure quantities
 numerically with decimal numbers, count certain observations with whole
-numbers, and record other observations such as names with words. In R,
-these date are represented with specific types. For example, numeric
-values are represented with type <code>numeric</code>, while many types
-of nonnumeric data are represented with type <code>character</code>.
-Here are some examples where we show how to determine how R has
-represented the data:</p>
+numbers, and record other observations such as names with characters or
+words. In R, these date are represented with specific types. For
+example, numeric values are represented with type <code>numeric</code>,
+while many types of nonnumeric data are represented with type
+<code>character</code>. Here are some examples where we show how to
+determine how R has represented the data:</p>
 <pre class="r"><code>numeric_values &lt;- c(1.2,6.5,8.1)
 class(numeric_values)</code></pre>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
@@ -499,7 +499,24 @@ for example when manipulating or exploring data can be quite tricky for
 reasons we will soon see. Lucky for use, the <code>lubridate</code>
 package eases some of the common difficulties in working with date and
 time data. Moreover, <code>lubridate</code> is highly compatible with
-many <code>tidyverse</code> packages and functions.</p>
+many <code>tidyverse</code> packages their functions.</p>
+</div>
+<div id="date-time-challenges" class="section level2">
+<h2>Date-Time Challenges</h2>
+<p>Perhaps one of the most common challenges of working with data that
+contains date-time entries is that different individuals record dates
+and times differently. For example, all of the following represent that
+same day:</p>
+<ul>
+<li><p>February 14, 2022</p></li>
+<li><p>02-14-2022</p></li>
+<li><p>2022-02-14</p></li>
+<li><p>14-Feb-2022</p></li>
+</ul>
+<p>maybe even there are other possibilities. Working with dates and
+times becomes even more complicated when you are forced to deal with
+things like leap year or day light savings. The point here is to realize
+that handling date-time data may not always be so straightforward.</p>
 </div>
 
 
