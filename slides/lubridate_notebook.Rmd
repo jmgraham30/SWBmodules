@@ -24,7 +24,7 @@ After this lesson, you should
 
 ## Background and Motivation 
 
-Data comes in a variety of types. For example, we measure quantities numerically with decimal numbers, count certain observations with whole numbers, and record other observations such as names with characters or words. In R, these date are represented with specific types. For example, numeric values are represented with type `numeric`, while many types of nonnumeric data are represented with type `character`. Here are some examples where we show how to determine how R has represented the data:
+Data comes in a variety of types. For example, we measure quantities numerically with decimal numbers, count certain observations with whole numbers, and record other observations such as names with characters or words. In R, these date are represented with specific types. For example, numeric values are represented with type `numeric`, while many types of non-numeric data are represented with type `character`. Here are some examples where we show how to determine how R has represented the data:
 
 ```{r}
 numeric_values <- c(1.2,6.5,8.1)
@@ -36,7 +36,7 @@ character_values <- c("dog","cat","bird")
 class(character_values)
 ```
 
-Often, we store a data set as a `data.frame` or `tibble` in R. Each column in a data frame can have a different type for the data it contains. Let's read in some sampe data to see this. We will work with two data sets:
+Often, we store a data set as a `data.frame` or `tibble` in R. Each column in a data frame can have a different type for the data it contains. Let's read in some sample data to see this. We will work with two data sets:
 
 1) The restaurants and food service data from [Data USA](https://datausa.io/) contained in the `Monthly Employment.csv` file, and
 
@@ -81,7 +81,7 @@ glimpse(r_package_downloads)
 ```
 
 
-The point is, date and time data are common and R facilitates working with date and time data. However, working with date and time data, say for example when manipulating or exploring data can be quite tricky for reasons we will soon see. Lucky for use, the `lubridate` package eases some of the common difficulties in working with date and time data. Moreover, `lubridate` is highly compatible with many `tidyverse` packages their functions. 
+The point is, date and time data are common and R facilitates working with date and time data. However, working with date and time data, say for example when manipulating or exploring data can be quite tricky for reasons we will soon see. Lucky for us, the `lubridate` package eases some of the common difficulties in working with date and time data. Moreover, `lubridate` is highly compatible with many `tidyverse` packages their functions. 
 
 ## Date-Time Challenges
 
@@ -95,4 +95,6 @@ Perhaps one of the most common challenges of working with data that contains dat
 
 * 14-Feb-2022
 
-maybe even there are other possibilities. Working with dates and times becomes even more complicated when you are forced to deal with things like leap year or day light savings. The point here is to realize that handling date-time data may not always be so straightforward.  
+maybe even there are other possibilities. Working with dates and times becomes even more complicated when you are forced to deal with things like leap year or day light savings. The point here is to realize that handling date-time data may not always be so straightforward. 
+
+
