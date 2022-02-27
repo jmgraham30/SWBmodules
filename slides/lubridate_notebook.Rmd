@@ -24,7 +24,7 @@ After this lesson, you should
 
 ## Background and Motivation 
 
-Data comes in a variety of types. For example, we measure quantities numerically with decimal numbers, count certain observations with whole numbers, and record other observations such as names with characters or words. In R, these date are represented with specific types. For example, numeric values are represented with type `numeric`, while many types of non-numeric data are represented with type `character`. Here are some examples where we show how to determine how R has represented the data:
+Data comes in a variety of types. For example, we measure quantities numerically with decimal numbers, count certain observations with whole numbers, and record other observations such as names with characters or words. In R, these date are represented with specific types. For example, numeric values are represented with type `numeric`, while many types of text-based data are represented with type `character`. Here are some examples where we show how to determine how R has represented the data:
 
 ```{r}
 numeric_values <- c(1.2,6.5,8.1)

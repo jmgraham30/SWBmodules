@@ -382,7 +382,7 @@ numerically with decimal numbers, count certain observations with whole
 numbers, and record other observations such as names with characters or
 words. In R, these date are represented with specific types. For
 example, numeric values are represented with type <code>numeric</code>,
-while many types of nonnumeric data are represented with type
+while many types of text-based data are represented with type
 <code>character</code>. Here are some examples where we show how to
 determine how R has represented the data:</p>
 <pre class="r"><code>numeric_values &lt;- c(1.2,6.5,8.1)
@@ -393,7 +393,7 @@ class(character_values)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <p>Often, we store a data set as a <code>data.frame</code> or
 <code>tibble</code> in R. Each column in a data frame can have a
-different type for the data it contains. Let’s read in some sampe data
+different type for the data it contains. Let’s read in some sample data
 to see this. We will work with two data sets:</p>
 <ol style="list-style-type: decimal">
 <li><p>The restaurants and food service data from <a href="https://datausa.io/">Data USA</a> contained in the
@@ -496,7 +496,7 @@ glimpse(r_package_downloads)</code></pre>
 <p>The point is, date and time data are common and R facilitates working
 with date and time data. However, working with date and time data, say
 for example when manipulating or exploring data can be quite tricky for
-reasons we will soon see. Lucky for use, the <code>lubridate</code>
+reasons we will soon see. Lucky for us, the <code>lubridate</code>
 package eases some of the common difficulties in working with date and
 time data. Moreover, <code>lubridate</code> is highly compatible with
 many <code>tidyverse</code> packages their functions.</p>
