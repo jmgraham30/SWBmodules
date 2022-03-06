@@ -20,11 +20,11 @@ After this lesson, you should
 
 1) be aware of some common challenges of working with dates and times in R, and
 
-2) know some introductory level techniques for handling date and time data in R using the `lubridate` package. 
+2) know some introductory level techniques for handling date-time data in R using the `lubridate` package. 
 
 ## Background and Motivation 
 
-Data comes in a variety of types. For example, we measure quantities numerically with decimal numbers, count certain observations with whole numbers, and record other observations such as names with characters or words. In R, these date are represented with specific types. For example, numeric values are represented with type `numeric`, while many types of text-based data are represented with type `character`. Here are some examples where we show how to determine how R has represented the data:
+Data comes in a variety of types. For example, we measure quantities numerically with decimal numbers, count certain observations with whole numbers, and record qualitative or categorical observations using text-based labeling. In R, these data are represented with specific types. For example, numeric values are represented with type `numeric`, while many types of text-based data are represented with type `character`. Here are some examples where we show how to determine how R has represented the data:
 
 ```{r}
 numeric_values <- c(1.2,6.5,8.1)
@@ -63,7 +63,7 @@ For example, we see that the `Month of Year ID` variable has type `chr` which is
 glimpse(food_services)
 ```
 
-We observe something very interesting from this. That is, the variable `Date` has type  `date`. It is very common to include columns in tabular data that correspond to dates. Further, dates, even when recorded with numbers are fundamentally different from other types of numerical data, and it can be argues that dates are not well-represented as characters either. Thus, R uses a particular type to represent dates. 
+We observe something very interesting from this. That is, the variable `Date` has type  `date`. It is very common to include columns in tabular data that correspond to dates. Further, dates, even when recorded with numbers are fundamentally different from other types of numerical data, and it can be argued that dates are not well-represented as characters either. Thus, R uses a particular type to represent dates. 
 
 Let's see another example. Call `glimpse` on the R packages data stored as `r_package_downloads`
 
@@ -81,11 +81,11 @@ glimpse(r_package_downloads)
 ```
 
 
-The point is, date and time data are common and R facilitates working with date and time data. However, working with date and time data, say for example when manipulating or exploring data can be quite tricky for reasons we will soon see. Lucky for us, the `lubridate` package eases some of the common difficulties in working with date and time data. Moreover, `lubridate` is highly compatible with many `tidyverse` packages their functions. 
+The point is, date-time data are common and R facilitates working with such data. However, working with date-time data, say for example when manipulating or exploring data can be quite tricky for reasons we will soon see. Lucky for us, the `lubridate` package eases some of the common difficulties in working with date-time data. Moreover, `lubridate` is highly compatible with many `tidyverse` packages and their functions. 
 
 ## Date-Time Challenges
 
-Perhaps one of the most common challenges of working with data that contains date-time entries is that different individuals record dates and times differently. For example, all of the following represent that same day:
+Perhaps one of the most common challenges of working with data that contains date-time entries is that different individuals record dates and times differently. For example, all of the following represent the same day:
 
 * February 14, 2022
 
@@ -95,6 +95,69 @@ Perhaps one of the most common challenges of working with data that contains dat
 
 * 14-Feb-2022
 
-maybe even there are other possibilities. Working with dates and times becomes even more complicated when you are forced to deal with things like leap year or day light savings. The point here is to realize that handling date-time data may not always be so straightforward. 
+and even there are other possibilities. Working with dates and times becomes even more complicated when you are forced to deal with things like leap year or day light savings. The point here is to realize that handling date-time data may not always be so straightforward. Let's proceed by looking at simple ways to create date-time entries in R. 
+
+## Creating Date-Times
+
+The `lubridate` package contains a suite of functions `ymd`, `ydm`, `mdy`, `myd`, `dmy`, and `dym` that can be used ot parse a string or character into a date. For example,
+
+```{r}
+(ymd("2022-03-06"))
+(mdy("March 6th, 2022"))
+(dmy("06-March-2022"))
+(ymd(20220306))
+```
+
+all result in the same output, that is, `r ymd("2022-03-06")`. Similar variations exist for parsing date-time strings. For example, 
+
+```{r}
+(ymd_hms("2022-03-06 08:58:31"))
+(mdy_hm("03/06/2022 08:58"))
+```
+
+## Manipulating Date-Times
+
+Consider again the `food_services` data:
+
+```{r}
+glimpse(food_services)
+```
+
+suppose that we want to create separate columns for the year, month, and day from the `Date` column, `lubridate` functions facilitate this:
+
+```{r}
+food_services %>% mutate(year=year(Date),month=month(Date),day=day(Date))
+```
+As an application, we plot the NSA Employees Growth by year and then compute a yearly mean:
+
+```{r}
+food_services %>% mutate(year=year(Date),month=month(Date),day=day(Date)) %>%
+  ggplot(aes(x=year,y=`NSA Employees Growth`)) + geom_point()
+```
+
+
+```{r}
+food_services %>% mutate(year=year(Date),month=month(Date),day=day(Date)) %>% group_by(year) %>% summarise(mean_growth=mean(`NSA Employees Growth`))
+```
+
+The opposite situation may also occur. That is, perhaps a data set has the year, month, and day spread across multiple columns and we would like to combine these into a single column. For example, let's look at the `flights` data set from the `nycflights13` package:
+
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute)
+```
+There are two functions in `lubridate`, `make_date` and `make_datetime` that can be used to combine separate date-time components into a single date-time value. For example, 
+
+```{r}
+make_date(year=2022,month=03,day=10)
+```
+
+Applying on of the functions `make_date` or `make_datetime` across multiple columns allows us to combine the individual components:
+
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute) %>%
+  mutate(flight_time=make_datetime(year,month,day,hour,minute))
+```
 
 
