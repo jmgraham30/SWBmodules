@@ -203,3 +203,11 @@ flights %>%
 ```
 
 
+
+# Summary
+
+
+
+# Conclusion
+
+For more information on using `lubridate` to work with date-time data, see Chapter 16 from [R for Data Science](https://r4ds.had.co.nz/dates-and-times.html).
