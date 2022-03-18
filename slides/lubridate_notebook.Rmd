@@ -18,9 +18,9 @@ library(nycflights13)
 
 After this lesson, you should
 
-1) be aware of some common challenges of working with dates and times in R, and
+1) be aware of some common challenges of working with data that include dates and times, and
 
-2) know some introductory level techniques for handling date-time data in R using the `lubridate` package. 
+2) know some introductory level techniques for handling date-time data in R using the [`lubridate`](https://lubridate.tidyverse.org/) package. 
 
 ## Background and Motivation 
 
@@ -99,7 +99,7 @@ and even there are other possibilities. Working with dates and times becomes eve
 
 ## Creating Date-Times
 
-The `lubridate` package contains a suite of functions `ymd`, `ydm`, `mdy`, `myd`, `dmy`, and `dym` that can be used ot parse a string or character into a date. For example,
+The `lubridate` package contains a suite of functions `ymd`, `ydm`, `mdy`, `myd`, `dmy`, and `dym` that can be used to parse a string or character into a date. For example,
 
 ```{r}
 (ymd("2022-03-06"))
@@ -115,6 +115,8 @@ all result in the same output, that is, `r ymd("2022-03-06")`. Similar variation
 (mdy_hm("03/06/2022 08:58"))
 ```
 
+Refer to the `lubridate` help documentation to learn more about the class of functions we have just introduced. We will move on to learning some common manipulations of date-time data.  
+
 ## Manipulating Date-Times
 
 Consider again the `food_services` data:
@@ -126,8 +128,13 @@ glimpse(food_services)
 suppose that we want to create separate columns for the year, month, and day from the `Date` column, `lubridate` functions facilitate this:
 
 ```{r}
-food_services %>% mutate(year=year(Date),month=month(Date),day=day(Date))
+food_services %>% 
+  mutate(year=year(Date),month=month(Date),day=day(Date)) %>%
+  glimpse()
 ```
+
+Note that we have used the `lubridate` functions `year`, `month`, and `day` in combination with the `mutate` function from `dplyr` to add three new columns. 
+
 As an application, we plot the NSA Employees Growth by year and then compute a yearly mean:
 
 ```{r}
@@ -137,7 +144,10 @@ food_services %>% mutate(year=year(Date),month=month(Date),day=day(Date)) %>%
 
 
 ```{r}
-food_services %>% mutate(year=year(Date),month=month(Date),day=day(Date)) %>% group_by(year) %>% summarise(mean_growth=mean(`NSA Employees Growth`))
+food_services %>% 
+  mutate(year=year(Date),month=month(Date),day=day(Date)) %>% 
+  group_by(year) %>% 
+  summarise(mean_growth=mean(`NSA Employees Growth`))
 ```
 
 The opposite situation may also occur. That is, perhaps a data set has the year, month, and day spread across multiple columns and we would like to combine these into a single column. For example, let's look at the `flights` data set from the `nycflights13` package:
@@ -152,12 +162,32 @@ There are two functions in `lubridate`, `make_date` and `make_datetime` that can
 make_date(year=2022,month=03,day=10)
 ```
 
-Applying on of the functions `make_date` or `make_datetime` across multiple columns allows us to combine the individual components:
+Applying one of the functions `make_date` or `make_datetime` across multiple columns allows us to combine the individual components:
 
 ```{r}
 flights %>% 
   select(year, month, day, hour, minute) %>%
   mutate(flight_time=make_datetime(year,month,day,hour,minute))
+```
+
+Consider the simple problem of answering the question, is there a day of the week when there are more flights? We can examine this as follows
+
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute) %>%
+  mutate(flight_time=make_datetime(year,month,day,hour,minute),weekday=wday(flight_time)) %>%
+  group_by(weekday) %>% 
+  summarise(n=n())
+```
+
+This certainly answers our question. However, when we present this result, we might prefer to have the names of the weekdays instead of their numerical ordering. We can obtain this just as easily
+
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute) %>%
+  mutate(flight_time=make_datetime(year,month,day,hour,minute),weekday=wday(flight_time,label=TRUE,abbr=FALSE)) %>%
+  group_by(weekday) %>% 
+  summarise(n=n())
 ```
 
 
