@@ -202,7 +202,15 @@ flights %>%
   geom_bar()
 ```
 
+Even a test for significance
 
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute) %>%
+  mutate(flight_time=make_datetime(year,month,day,hour,minute),weekday=wday(flight_time,label=TRUE,abbr=FALSE)) %>%
+  group_by(weekday) %>% 
+  summarise(n=n()) %>% select(n) %>% chisq.test(p=c(1/7,1/7,1/7,1/7,1/7,1/7,1/7))
+```
 
 # Summary
 
