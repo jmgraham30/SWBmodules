@@ -170,6 +170,8 @@ flights %>%
   mutate(flight_time=make_datetime(year,month,day,hour,minute))
 ```
 
+The `lubridate` package also contains functions such as `year`, `month`, `wday`, etc. that can be used to extract components of date-time data such as the year, month, day of the week, hour, etc. Let's look at an example use case for these types of functions. 
+
 Consider the simple problem of answering the question, is there a day of the week when there are more flights? We can examine this as follows
 
 ```{r}
@@ -188,6 +190,16 @@ flights %>%
   mutate(flight_time=make_datetime(year,month,day,hour,minute),weekday=wday(flight_time,label=TRUE,abbr=FALSE)) %>%
   group_by(weekday) %>% 
   summarise(n=n())
+```
+
+Perhaps a plot would be more useful:
+
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute) %>%
+  mutate(flight_time=make_datetime(year,month,day,hour,minute),weekday=wday(flight_time,label=TRUE,abbr=FALSE)) %>%
+  ggplot(aes(x=weekday)) + 
+  geom_bar()
 ```
 
 
