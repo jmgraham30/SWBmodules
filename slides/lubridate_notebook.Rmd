@@ -202,7 +202,7 @@ flights %>%
   geom_bar()
 ```
 
-Even a test for significance
+We may even conduct a $\chi^2$-test for significance:
 
 ```{r}
 flights %>% 
