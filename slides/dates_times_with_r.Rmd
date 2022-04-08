@@ -30,13 +30,13 @@ After this lesson, you should
 
 ## Background and Motivation 
 
-* Data comes in a variety of types.
+- Data comes in a variety of types.
 
-* We measure quantities numerically with decimal numbers. In R, represented by `numeric`.
+- We measure quantities numerically with decimal numbers. In R, represented by `numeric`.
 
-* Count certain observations with whole numbers. In R, represented by `numeric`.
+- Count certain observations with whole numbers. In R, represented by `numeric`.
 
-* Record qualitative or categorical observations using text-based labeling. In R, represented by `character`.
+- Record qualitative or categorical observations using text-based labeling. In R, represented by `character`.
 
 ## R Data Examples
 
@@ -52,11 +52,11 @@ class(character_values)
 
 ## Data Frames and Examples
 
-* Often, we store a data set as a `data.frame` or `tibble` in R.
+- Often, we store a data set as a `data.frame` or `tibble` in R.
 
-  * Each column in a data frame can have a different type for the data it contains.
+  - Each column in a data frame can have a different type for the data it contains.
   
-* We will work with three data sets:
+- We will work with three data sets:
 
 1) The restaurants and food service data from [Data USA](https://datausa.io/) contained in the `Monthly Employment.csv` file, and
 
@@ -66,9 +66,9 @@ class(character_values)
 
 ## Looking at the Data
 
-* Let's look at what is in the data frames for our working examples data.
+- Let's look at what is in the data frames for our working examples data.
 
-  * We will show the first few rows for the food services and R package downloads data sets. 
+  - We will show the first few rows for the food services and R package downloads data sets. 
   
 ## Food Services
 
@@ -76,7 +76,7 @@ class(character_values)
 head(food_services,4) %>% flextable()
 ```
 
-* What do you think are the data types for each column of the data? 
+- What do you think are the data types for each column of the data? 
 
 ## R Package Downloads
 
@@ -84,13 +84,13 @@ head(food_services,4) %>% flextable()
 head(r_package_downloads,4) %>% flextable()
 ```
 
-* What do you think are the data types for each column of the data?
+- What do you think are the data types for each column of the data?
 
 ## Date and Time Data
 
-* Some variables in the data sets have a `date` or `time`. 
+- Some variables in the data sets have a `date` or `time`. 
 
-* For example,
+- For example,
 
 ```{r}
 (class(food_services$Date))
@@ -99,7 +99,7 @@ head(r_package_downloads,4) %>% flextable()
 
 ## Date and Time Challenges in a Spreadsheet
 
-* It can be very challenging to work with data or time data in a spreadsheet.
+- It can be very challenging to work with data or time data in a spreadsheet.
 
 
 
