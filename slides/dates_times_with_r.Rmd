@@ -1,0 +1,130 @@
+---
+title: "Dates and Times in R"
+author: "Jason M Graham"
+date: "`r Sys.Date()`"
+output: 
+  powerpoint_presentation:
+    reference_doc: BasicStatsRTemplate.pptx
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(lubridate)
+library(nycflights13)
+library(flextable)
+# https://datausa.io/profile/naics/restaurants-food-services
+data_folder <- "../Data/"
+data_file <- paste0(data_folder,"Monthly Employment.csv")
+food_services <- read_csv(data_file)
+r_package_downloads <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-30/r-downloads.csv")
+```
+
+## Goals
+
+After this lesson, you should
+
+1) be aware of some common challenges of working with data that include dates and times, and
+
+2) know some introductory level techniques for handling date-time data in R using the [`lubridate`](https://lubridate.tidyverse.org/) package.
+
+## Background and Motivation 
+
+* Data comes in a variety of types.
+
+* We measure quantities numerically with decimal numbers. In R, represented by `numeric`.
+
+* Count certain observations with whole numbers. In R, represented by `numeric`.
+
+* Record qualitative or categorical observations using text-based labeling. In R, represented by `character`.
+
+## R Data Examples
+
+```{r,echo=TRUE}
+numeric_values <- c(1.2,6.5,8.1)
+class(numeric_values)
+```
+
+```{r,echo=TRUE}
+character_values <- c("dog","cat","bird")
+class(character_values)
+```
+
+## Data Frames and Examples
+
+* Often, we store a data set as a `data.frame` or `tibble` in R.
+
+  * Each column in a data frame can have a different type for the data it contains.
+  
+* We will work with three data sets:
+
+1) The restaurants and food service data from [Data USA](https://datausa.io/) contained in the `Monthly Employment.csv` file, and
+
+2) the [R and R Packages download data](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-10-30) from [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).
+
+3) The airline flights data from the `nycflights13` package. 
+
+## Looking at the Data
+
+* Let's look at what is in the data frames for our working examples data.
+
+  * We will show the first few rows for the food services and R package downloads data sets. 
+  
+## Food Services
+
+```{r}
+head(food_services,4) %>% flextable()
+```
+
+* What do you think are the data types for each column of the data? 
+
+## R Package Downloads
+
+```{r}
+head(r_package_downloads,4) %>% flextable()
+```
+
+* What do you think are the data types for each column of the data?
+
+## Date and Time Data
+
+* Some variables in the data sets have a `date` or `time`. 
+
+* For example,
+
+```{r}
+(class(food_services$Date))
+(class(r_package_downloads$time))
+```
+
+## Date and Time Challenges in a Spreadsheet
+
+* It can be very challenging to work with data or time data in a spreadsheet.
+
+
+
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
