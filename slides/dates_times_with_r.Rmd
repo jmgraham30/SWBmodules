@@ -97,34 +97,76 @@ head(r_package_downloads,4) %>% flextable()
 (class(r_package_downloads$time))
 ```
 
+## Date-Time Challenges
+
+Perhaps one of the most common challenges of working with data that contains date-time entries is that 
+
+- Different individuals record dates and times differently. 
+
+- For example, all of the following represent the same day:
+
+  * February 14, 2022
+
+  * 02-14-2022
+
+  * 2022-02-14
+
+  * 14-Feb-2022
+
+
 ## Date and Time Challenges in a Spreadsheet
 
 - It can be very challenging to work with data or time data in a spreadsheet.
 
+- Working in R facilitates easier handling of date-time data, especially when using the `lubridate` package.  
 
+- Let's see some of the functionality of `lubridate`. 
 
+## Creating Dates
 
-## R Markdown
+- `lubridate` contains functions `ymd`, `ydm`, `mdy`, `myd`, `dmy`, and `dym` to parse a string or character into a date. For example,
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
-
-## Slide with Bullets
-
-- Bullet 1
-- Bullet 2
-- Bullet 3
-
-## Slide with R Output
-
-```{r cars, echo = TRUE}
-summary(cars)
+```{r,echo=TRUE}
+(ymd("2022-03-06"))
+(mdy("March 6th, 2022"))
+(dmy("06-March-2022"))
+(ymd(20220306))
 ```
 
-## Slide with Plot
 
-```{r pressure}
-plot(pressure)
+## Creating Date-Times
+
+- We can also parse date-time strings. For example, 
+
+```{r,echo=TRUE}
+(ymd_hms("2022-03-06 08:58:31"))
+(mdy_hm("03/06/2022 08:58"))
 ```
+
+## Manipulating Date-Times
+
+- It is also possible to manipulate dates and times with lubridate functions. 
+
+- For example, the following command will split columns for the year, month, and day from the `Date` column
+
+```
+food_services %>% 
+  mutate(year=year(Date),month=month(Date),day=day(Date)) %>%
+  glimpse()
+```
+
+- Note that we have used the `lubridate` functions `year`, `month`, and `day` in combination with the `mutate` function from `dplyr` to add three new columns.
+
+## Combining Date Components
+
+- Perhaps a data set has the year, month, and day spread across multiple columns and we would like to combine these into a single column. 
+
+- This is done with a command such as 
+
+```
+make_date(year=2022,month=03,day=10)
+```
+
+- Let's see an application of this to a data frame. 
+
 
