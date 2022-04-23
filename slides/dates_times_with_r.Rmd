@@ -28,6 +28,18 @@ After this lesson, you should
 
 2) know some introductory level techniques for handling date-time data in R using the [`lubridate`](https://lubridate.tidyverse.org/) package.
 
+## Overview
+
+In this lesson, we will
+
+- motivate the need to work with data sets that include variables that record information corresponding to dates or times, 
+
+- explain some common problems associated with data-time data, 
+
+- explain the most basic functions from the `lubridate` package, and
+
+- present some use case examples. 
+
 ## Background and Motivation 
 
 - Data comes in a variety of types.
@@ -58,9 +70,9 @@ class(character_values)
   
 - We will work with three data sets:
 
-1) The restaurants and food service data from [Data USA](https://datausa.io/) contained in the `Monthly Employment.csv` file, and
+1) The restaurants and food service data from [Data USA](https://datausa.io/) contained in the `Monthly Employment.csv` file,
 
-2) the [R and R Packages download data](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-10-30) from [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday).
+2) the [R and R Packages download data](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-10-30) from [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday), and
 
 3) The airline flights data from the `nycflights13` package. 
 
@@ -88,18 +100,20 @@ head(r_package_downloads,4) %>% flextable()
 
 ## Date and Time Data
 
-- Some variables in the data sets have a `date` or `time`. 
+- Some variables in the data sets have a `date` or `time` type. 
 
-- For example,
+- We can see the types for the columns in the data frames with,
 
-```{r}
-(class(food_services$Date))
-(class(r_package_downloads$time))
 ```
+glimpse(food_services)
+glimpse(r_package_downloads)
+```
+
+- The output shows that the date and time columns have data types associated with a `date` or `time` type in R.
 
 ## Date-Time Challenges
 
-Perhaps one of the most common challenges of working with data that contains date-time entries is that 
+Some common challenges of working with data that contains date-time entries include 
 
 - Different individuals record dates and times differently. 
 
@@ -116,9 +130,17 @@ Perhaps one of the most common challenges of working with data that contains dat
 
 ## Date and Time Challenges in a Spreadsheet
 
-- It can be very challenging to work with data or time data in a spreadsheet.
+- It can be very challenging to work with date or time data in a spreadsheet.
 
 - Working in R facilitates easier handling of date-time data, especially when using the `lubridate` package.  
+
+## The `lubridate` Package
+
+- [`lubridate`](https://lubridate.tidyverse.org/) is an R package associated with the `tidyverse` family of packages
+
+- `library(lubridate)` loads the package, note that `lubridate` is not loaded by `library(tidyverse)`
+
+- `lubridate` usage in covered in the [Dates and Times chapter](https://r4ds.had.co.nz/dates-and-times.html) of [R for Data Science](https://r4ds.had.co.nz/index.html). 
 
 - Let's see some of the functionality of `lubridate`. 
 
@@ -169,4 +191,21 @@ make_date(year=2022,month=03,day=10)
 
 - Let's see an application of this to a data frame. 
 
+## Use Case Examples
+
+- Let's go to RStudio and work through some code for some common use case examples together. 
+
+
+## Summary
+
+In this lesson we
+
+- motivated the necessity of working with date and time data,
+
+- explained some of the challenges that this present, and
+
+- showed `lubridate` functions that address facilitate solving common date-time problems in R.
+
+
+## Conclusion
 

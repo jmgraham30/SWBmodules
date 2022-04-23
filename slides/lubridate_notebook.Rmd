@@ -214,7 +214,7 @@ flights %>%
 
 # Summary
 
-
+We motivated the necessity of working with date and time data, explained some of the challenges that this present, and showed `lubridate` functions that address facilitate solving common date-time problems in R.     
 
 # Conclusion
 
