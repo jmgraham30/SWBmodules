@@ -190,6 +190,14 @@ Consider the simple problem of answering the question, is there a day of the wee
 flights %>% 
   select(year, month, day, hour, minute) %>%
   mutate(flight_time=make_datetime(year,month,day,hour,minute),weekday=wday(flight_time)) %>%
+  glimpse()
+```
+
+
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute) %>%
+  mutate(flight_time=make_datetime(year,month,day,hour,minute),weekday=wday(flight_time)) %>%
   group_by(weekday) %>% 
   summarise(n=n())
 ```
