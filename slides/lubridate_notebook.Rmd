@@ -5,12 +5,11 @@ date: "2/14/2022"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(lubridate)
 library(nycflights13)
-#library(hms)
 ```
 
 
@@ -162,13 +161,26 @@ There are two functions in `lubridate`, `make_date` and `make_datetime` that can
 make_date(year=2022,month=03,day=10)
 ```
 
+```{r}
+class(make_date(year=2022,month=03,day=10))
+```
+
 Applying one of the functions `make_date` or `make_datetime` across multiple columns allows us to combine the individual components:
 
 ```{r}
 flights %>% 
   select(year, month, day, hour, minute) %>%
-  mutate(flight_time=make_datetime(year,month,day,hour,minute))
+  mutate(flight_time=make_datetime(year,month,day,hour,minute)) %>%
+  glimpse()
 ```
+
+Compare with the original:
+
+```{r}
+flights %>% 
+  glimpse()
+```
+
 
 The `lubridate` package also contains functions such as `year`, `month`, `wday`, etc. that can be used to extract components of date-time data such as the year, month, day of the week, hour, etc. Let's look at an example use case for these types of functions. 
 
